@@ -1,23 +1,18 @@
 const express = require("express");
 const app = express();
+const handlebars = require('express-handlebars')
 
-
-app.get('/',function(req,res){
-    res.send("seja bem vindo ao meu app!");
-});
-
-app.get('/sobre', function(req,res){
-    res.send("Pagina sobre");
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('sistemaCadastro','root','root',{
+    host:"localhost",
+    dialect:'mysql',
+    port:3307
 })
 
-app.get("/blog",function(req,res){
-    res.send("Bem vindo ao blog");
-})
-
-app.get("/ola/:nome/:profissao",function(req,res){
-    res.send("Ola" + ' ' + req.params.nome + "Seu cargo e: " + req.params.profissao);
-
-})
+//Config
+  //Template Engine
+  app.engine('handlebars',handlebars({defaultLayout:'main'}))
+  app.set('view engine','handlebars')
 
 app.listen(8081,function(){
     console.log("servidor rodando... ");
